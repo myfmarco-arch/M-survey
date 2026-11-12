@@ -1,0 +1,15 @@
+{
+  "contract": "m-survey-contract-v1",
+  "revision": "2026-11-11.4",
+  "declaring_compatibility": "m-survey-contract-v1@2026-11-11.4",
+  "note": "修改 contracts、schema 或 conformance 评测后运行 python scripts/contract_manifest.py write；内容变化时 revision 自动前移为 YYYY-MM-DD.N。",
+  "files": {
+    "references/contracts/artifacts.md": "63c797cd758597ebc66aa7d08a8e4236b6eacb9af7ee63e9eb83a28248d7c5ad",
+    "references/contracts/module-contract.md": "f558574557733be631f558acc4fe2d01ce25318a47273bb405d5816d9a2977c4",
+    "references/contracts/validation-contract.md": "627b32d7c785e3a0bffc087eeb3fd57794849641a034d27ebc2dbe6b0421e5df",
+    "references/contracts/overlay-contract.md": "3b4e28e61a42f18ff868c8241223b318acae7396eb553b061bb2c4988c57e33f",
+    "schemas/questionnaire-spec.schema.json": "2d20b57ad056813a55cdea6d1b1d0e7094268dcf2968e8ad2be622790dfcda31",
+    "evals/conformance/cases.yaml": "5e1ac46e5be5751b1a8208ec49e9551027803b88dc5e515e7f91550119e926da",
+    "evals/scoring.md": "6d0201fdd3a84f81d85915aaf55259695efa633dfb63d95839bcf5bf369162b4"
+  }
+}

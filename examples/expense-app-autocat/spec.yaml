@@ -1,0 +1,220 @@
+# 示例 QuestionnaireSpec。场景和产品均为虚构，见同目录 README.md。
+spec_version: 1
+contract: m-survey-contract-v1
+meta:
+  id: zxm-autocat-experience
+  title: 账小满自动分类功能体验调研
+  language: zh-CN
+  status: draft
+  version: "1.0"
+  estimated_minutes: 6
+  intro: 感谢您参与账小满的用户调研。本问卷了解您使用记账功能的体验，约需 6 分钟。参与完全自愿，您可以随时退出。问卷不收集姓名、手机号等联系方式，回答不与您的账号关联，结果只以汇总形式用于改进产品。
+
+research_questions:
+  - id: RQ1
+    text: 近 30 天活跃用户中，知道并使用自动分类的比例是多少？
+  - id: RQ2
+    text: 使用者对自动分类的总体体验和各方面表现评价如何？
+  - id: RQ3
+    text: 使用者遇到了哪些问题，各问题多常见、影响多大？
+  - id: RQ4
+    text: 知道但没有使用自动分类的用户，主要原因是什么？
+
+sections:
+  - id: P1
+    title: 信息甄别
+    role: screening
+    questions:
+      - id: S1
+        label: 年龄
+        purpose: {type: screening, note: 只调查成年人}
+        construct: demographic
+        prompt: 您的年龄是？
+        response_type: single
+        options:
+          - {id: o1, text: 18 岁以下, terminate: true}
+          - {id: o2, text: 18–24 岁}
+          - {id: o3, text: 25–34 岁}
+          - {id: o4, text: 35–44 岁}
+          - {id: o5, text: 45–54 岁}
+          - {id: o6, text: 55 岁及以上}
+
+      - id: S2
+        label: 行业排除
+        purpose: {type: screening, note: 排除记账类产品从业者}
+        construct: fact
+        prompt: 您目前是否在账小满或其他记账类产品的公司工作？
+        response_type: single
+        options:
+          - {id: o1, text: 是, terminate: true}
+          - {id: o2, text: 否}
+
+      - id: S3
+        label: 记账活跃度
+        purpose: {type: screening, note: 只调查近 30 天有记账行为的用户}
+        construct: behavior
+        prompt: 过去 30 天，您在账小满中大约记了多少笔账？
+        response_type: single
+        options:
+          - {id: o1, text: 0 笔, terminate: true}
+          - {id: o2, text: 1–10 笔}
+          - {id: o3, text: 11–30 笔}
+          - {id: o4, text: 31–60 笔}
+          - {id: o5, text: 61 笔及以上}
+
+  - id: P2
+    title: 主问卷
+    role: main
+    questions:
+      - id: Q1
+        label: 功能认知
+        purpose: {type: research_question, refs: [RQ1]}
+        construct: awareness
+        prompt: 账小满有一项“自动分类”功能：记账时，App 会根据账单内容自动选择“餐饮”“交通”等分类。在今天之前，您是否知道这项功能？
+        response_type: single
+        options:
+          - {id: o1, text: 知道}
+          - {id: o2, text: 不知道}
+
+      - id: Q2
+        label: 功能使用
+        purpose: {type: eligibility, refs: [RQ1]}
+        construct: behavior
+        prompt: 过去 30 天，您记账时是否使用过自动分类，也就是让 App 自动选择分类，而不是自己手动选择？
+        response_type: single
+        options:
+          - {id: o1, text: 使用过，大部分账单都用, eligible: true}
+          - {id: o2, text: 使用过，少部分账单用, eligible: true}
+          - {id: o3, text: 没有使用过}
+          - {id: o4, text: 不记得了, semantic: dont_know, code: 97}
+        coding_semantics: 97 = 不记得，为本项目约定的用户缺失编码。
+        note: 自动分类在记账时自动运行，不知道功能名称的用户也可能用过，因此 Q2 不以 Q1 为条件。
+
+      - id: Q3
+        label: 总体满意度
+        purpose: {type: research_question, refs: [RQ2]}
+        construct: usage_experience
+        experience_gate: Q2
+        prompt: 总体而言，您对过去 30 天使用自动分类的体验有多满意？
+        response_type: scale
+        display_logic:
+          all:
+            - {question: Q2, selected_any: [o1, o2]}
+        scale: {min: 1, max: 5, low: 非常不满意, high: 非常满意}
+
+      - id: Q4
+        label: 分项表现
+        purpose: {type: research_question, refs: [RQ2]}
+        construct: usage_experience
+        experience_gate: Q2
+        prompt: 根据过去 30 天的使用经历，您认为自动分类在以下方面表现如何？
+        response_type: matrix
+        display_logic:
+          all:
+            - {question: Q2, selected_any: [o1, o2]}
+        rows:
+          - {id: r1, text: 分类结果准确}
+          - {id: r2, text: 分类错了以后容易修改}
+          - {id: r3, text: 能识别我自己新建的分类}
+          - {id: r4, text: 同一商家的账单分类前后一致}
+        scale: {min: 1, max: 5, low: 非常差, high: 非常好}
+        response_rules: {randomize_rows: true}
+
+      - id: Q5
+        label: 遇到的问题
+        purpose: {type: research_question, refs: [RQ3]}
+        construct: usage_experience
+        experience_gate: Q2
+        prompt: 过去 30 天，您在使用自动分类时遇到过以下哪些情况？
+        response_type: multi
+        display_logic:
+          all:
+            - {question: Q2, selected_any: [o1, o2]}
+        options:
+          - {id: o1, text: 分类错误，需要手动修改}
+          - {id: o2, text: 同一商家的账单每次被分到不同分类}
+          - {id: o3, text: 无法识别我新建的分类}
+          - {id: o4, text: 转账或退款被记成支出}
+          - {id: o5, text: 找不到修改分类的入口}
+          - {id: other, text: 其他, semantic: other, open_text: true}
+          - {id: none, text: 以上都没有遇到, semantic: none, exclusive: true}
+        response_rules: {randomize_options: true}
+
+      - id: Q6
+        label: 问题频率
+        purpose: {type: research_question, refs: [RQ3]}
+        construct: usage_experience
+        experience_gate: Q2
+        prompt: 过去 30 天，{{item}}这种情况大约发生了多少次？
+        response_type: single
+        loop_over: {question: Q5, filter: selected}
+        display_logic:
+          all:
+            - {question: Q2, selected_any: [o1, o2]}
+            - {question: Q5, selected_none: [none]}
+        options:
+          - {id: o1, text: 1–2 次}
+          - {id: o2, text: 3–5 次}
+          - {id: o3, text: 6–10 次}
+          - {id: o4, text: 11 次及以上}
+          - {id: o5, text: 不记得了, semantic: dont_know, code: 97}
+
+      - id: Q7
+        label: 影响最大的问题
+        purpose: {type: research_question, refs: [RQ3]}
+        construct: usage_experience
+        experience_gate: Q2
+        prompt: 在您遇到的情况中，哪一项对您记账的影响最大？
+        response_type: single
+        options_from: {question: Q5, filter: selected}
+        display_logic:
+          all:
+            - {question: Q2, selected_any: [o1, o2]}
+            - {question: Q5, selected_none: [none]}
+        program_note: Q5 只选了一种情况（不含“其他”）的受访者不展示本题，由程序自动记为该情况的编码。
+
+      - id: Q8
+        label: 未使用原因
+        purpose: {type: research_question, refs: [RQ4]}
+        construct: reason
+        prompt: 您过去 30 天没有使用自动分类，主要是因为什么？
+        response_type: multi
+        display_logic:
+          all:
+            - {question: Q1, selected_any: [o1]}
+            - {question: Q2, selected_any: [o3]}
+        options:
+          - {id: o1, text: 不知道怎么开启}
+          - {id: o2, text: 担心分类不准确}
+          - {id: o3, text: 习惯自己选择分类}
+          - {id: o4, text: 我的账单类型比较特殊，自动分类用处不大}
+          - {id: other, text: 其他, semantic: other, open_text: true}
+          - {id: dk, text: 说不清, semantic: dont_know, exclusive: true, code: 97}
+        response_rules: {randomize_options: true, max_select: 3}
+
+      - id: Q9
+        label: 改进建议
+        purpose: {type: research_question, refs: [RQ3]}
+        construct: need
+        prompt: 如果自动分类只能改进一处，您最希望改进什么？
+        response_type: open_text
+        display_logic:
+          all:
+            - {question: Q2, selected_any: [o1, o2]}
+        response_rules: {required: false}
+
+  - id: P3
+    title: 背景信息
+    role: profile
+    questions:
+      - id: D1
+        label: 使用时长
+        purpose: {type: profile, note: 与用户库使用时长结构比较，偏差明显时事后加权；不设配额}
+        construct: fact
+        prompt: 您使用账小满多长时间了？
+        response_type: single
+        options:
+          - {id: o1, text: 不到 3 个月}
+          - {id: o2, text: 3 个月至不到 1 年}
+          - {id: o3, text: 1 年至不到 3 年}
+          - {id: o4, text: 3 年及以上}

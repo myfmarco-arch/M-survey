@@ -1,0 +1,4 @@
+interface:
+  display_name: "M-survey"
+  short_description: "可直接使用、可分叉定制的中文定量问卷框架"
+  default_prompt: "Use $m-survey to design, revise, or review a Chinese quantitative research questionnaire."

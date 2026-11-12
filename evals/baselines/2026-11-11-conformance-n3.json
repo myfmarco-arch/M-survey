@@ -1,0 +1,28 @@
+{
+  "created": "2026-11-11T22:37:04",
+  "skill_version": "0.4.0",
+  "model": "Opus 5.5 class (subagent runs, snapshot 10060d65)",
+  "judge": "same-model self-review (N=3)",
+  "suites": {
+    "conformance": {
+      "passed": true,
+      "incomplete_cases": 0,
+      "non_blocking_pass_rate": 1.0
+    }
+  },
+  "baseline_type": "conformance, N=3",
+  "runs_per_case": 3,
+  "date": "2026-11-11",
+  "contract_revision": "2026-11-11.3",
+  "declaring_compatibility": "m-survey-contract-v1@2026-11-11.3",
+  "subject_snapshot_fingerprint": "10060d65768822dcc0267a4050cbabba",
+  "judge_independence": "same model family as the subject (no independent reviewer)",
+  "declares_compatibility": true,
+  "caveats": [
+    "基线对应 revision 2026-11-11.3；随后为写入本结论修改了 evals/scoring.md 的“当前状态”段落，revision 前移到 2026-11-11.4。该改动只涉及文书记述，未改任何用例、规则或严重程度。",
+    "评审由同一模型族自行完成，未做第二方复核；评审宽严偏差无法估计。",
+    "被测快照（指纹 10060d65）之后，仓库又修改了 method-selection.md、clarification-questions.md/.csv、clarification-probes.md、README、CHANGELOG、ARCHITECTURE。这些文件不属于合同，revision 未变，但本轮结果未覆盖修改后的内容。",
+    "本轮只覆盖 conformance 组；modules、product 两组尚未跑。",
+    "被测模型通过子代理运行，不含 CLI 原生工具链差异。"
+  ]
+}

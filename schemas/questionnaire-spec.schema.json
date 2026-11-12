@@ -1,0 +1,530 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "M-survey QuestionnaireSpec",
+  "description": "问卷语义的中间产物。字段语义见 references/contracts/artifacts.md。本 schema 只约束结构；逻辑引用、编码唯一和测量规则由 scripts/validate_spec.py 检查。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "spec_version",
+    "contract",
+    "meta",
+    "research_questions",
+    "sections"
+  ],
+  "properties": {
+    "spec_version": {
+      "const": 1
+    },
+    "contract": {
+      "const": "m-survey-contract-v1"
+    },
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "language",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "language": {
+          "type": "string",
+          "minLength": 2
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "fielded"
+          ],
+          "description": "fielded 表示已开始回收，题号、选项标识和编码冻结。"
+        },
+        "version": {
+          "type": "string"
+        },
+        "estimated_minutes": {
+          "type": "number",
+          "minimum": 0
+        },
+        "intro": {
+          "type": "string",
+          "description": "卷首语。"
+        }
+      }
+    },
+    "research_questions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "text"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^RQ[0-9]+$"
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "sections": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/section"
+      }
+    }
+  },
+  "definitions": {
+    "section": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "questions"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^P[0-9]+$",
+          "description": "模块标识，渲染为 Part n。"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "enum": [
+            "screening",
+            "main",
+            "profile",
+            "contact",
+            "other"
+          ]
+        },
+        "questions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/question"
+          }
+        }
+      }
+    },
+    "question": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "purpose",
+        "construct",
+        "prompt",
+        "response_type"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Za-z0-9_-]*$"
+        },
+        "var": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$",
+          "description": "变量名；未填写时由适配器按题号生成。"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "purpose": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "type": {
+              "enum": [
+                "research_question",
+                "screening",
+                "eligibility",
+                "quota",
+                "logic",
+                "profile",
+                "consent",
+                "contact"
+              ]
+            },
+            "refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^RQ[0-9]+$"
+              }
+            },
+            "note": {
+              "type": "string"
+            }
+          }
+        },
+        "construct": {
+          "enum": [
+            "fact",
+            "behavior",
+            "awareness",
+            "usage_experience",
+            "concept_evaluation",
+            "attitude",
+            "intention",
+            "need",
+            "preference",
+            "reason",
+            "demographic",
+            "consent",
+            "contact",
+            "stimulus",
+            "other"
+          ],
+          "description": "usage_experience 表示对实际使用经历的评价，必须设置 experience_gate。"
+        },
+        "prompt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "response_type": {
+          "enum": [
+            "single",
+            "multi",
+            "scale",
+            "matrix",
+            "open_text",
+            "numeric",
+            "ranking",
+            "info"
+          ]
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/option"
+          }
+        },
+        "options_from": {
+          "$ref": "#/definitions/pipe"
+        },
+        "loop_over": {
+          "$ref": "#/definitions/pipe"
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "text"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9_]+$"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "scale": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "min",
+            "max",
+            "low",
+            "high"
+          ],
+          "properties": {
+            "min": {
+              "type": "integer"
+            },
+            "max": {
+              "type": "integer"
+            },
+            "low": {
+              "type": "string",
+              "minLength": 1,
+              "description": "最小值端点含义"
+            },
+            "high": {
+              "type": "string",
+              "minLength": 1,
+              "description": "最大值端点含义"
+            },
+            "mid": {
+              "type": "string"
+            }
+          }
+        },
+        "numeric": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "integer": {
+              "type": "boolean"
+            }
+          }
+        },
+        "experience_gate": {
+          "type": "string",
+          "description": "确认受访者实际使用过评价对象的行为题 id。该题中表示实际使用的选项标记 eligible: true。"
+        },
+        "display_logic": {
+          "$ref": "#/definitions/logic"
+        },
+        "response_rules": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "required": {
+              "type": "boolean"
+            },
+            "min_select": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "max_select": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "rank_count": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "randomize_options": {
+              "type": "boolean"
+            },
+            "randomize_rows": {
+              "type": "boolean"
+            },
+            "single_page": {
+              "type": "boolean"
+            },
+            "hidden": {
+              "type": "boolean"
+            }
+          }
+        },
+        "coding_semantics": {
+          "type": "string",
+          "description": "编码语义补充说明，例如派生规则。"
+        },
+        "note": {
+          "type": "string",
+          "description": "不展示在问卷正文中的设计说明。需要编程人员执行的规则写在 program_note。"
+        },
+        "program_note": {
+          "type": "string",
+          "description": "给问卷编程人员的说明，渲染到问卷正文中题目下方，例如自动带入或跳过条件。"
+        }
+      }
+    },
+    "option": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "text"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]+$"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "code": {
+          "type": [
+            "integer",
+            "string"
+          ]
+        },
+        "semantic": {
+          "enum": [
+            "regular",
+            "other",
+            "none",
+            "dont_know",
+            "not_applicable",
+            "refused"
+          ],
+          "default": "regular"
+        },
+        "exclusive": {
+          "type": "boolean"
+        },
+        "open_text": {
+          "type": "boolean"
+        },
+        "terminate": {
+          "type": "boolean"
+        },
+        "position": {
+          "enum": [
+            "top",
+            "bottom",
+            "fixed"
+          ]
+        },
+        "quota": {
+          "type": "string"
+        },
+        "eligible": {
+          "type": "boolean",
+          "description": "在 experience_gate 指向的题目中，表示受访者实际使用过评价对象。"
+        }
+      }
+    },
+    "pipe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "question",
+        "filter"
+      ],
+      "properties": {
+        "question": {
+          "type": "string"
+        },
+        "filter": {
+          "enum": [
+            "selected",
+            "not_selected",
+            "all"
+          ]
+        }
+      }
+    },
+    "condition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "question"
+      ],
+      "properties": {
+        "question": {
+          "type": "string"
+        },
+        "row": {
+          "type": "string"
+        },
+        "selected_any": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "selected_none": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "value_between": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "number"
+          }
+        },
+        "answered": {
+          "type": "boolean"
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "selected_any"
+          ]
+        },
+        {
+          "required": [
+            "selected_none"
+          ]
+        },
+        {
+          "required": [
+            "value_between"
+          ]
+        },
+        {
+          "required": [
+            "answered"
+          ]
+        }
+      ]
+    },
+    "logic": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "all": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/condition"
+          }
+        },
+        "any": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/condition"
+          }
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "all"
+          ]
+        },
+        {
+          "required": [
+            "any"
+          ]
+        }
+      ]
+    }
+  }
+}

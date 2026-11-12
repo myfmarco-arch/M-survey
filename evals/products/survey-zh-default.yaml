@@ -1,0 +1,93 @@
+version: 2
+suite: product
+product: survey-zh-default
+# 官方产品 survey-zh-default 的回归评测：写作、格式和默认值。分叉产品可以不通过本组评测。
+cases:
+  - id: default-three-column-options
+    kind: positive
+    blocking: true
+    targets: [format.option-table]
+    request: "设计一道功能使用多选题，了解用户过去 30 天用过手机相册的哪些功能，包含其他和以上都没有。"
+    expected:
+      - 使用“编码 | 选项细节 | 程序标签”三列表格
+      - 在没有其他编码条件时，“其他”默认使用 98，并标注置底和开放填空
+      - 在没有其他编码条件时，“以上都没有”默认使用 99，并标注置底和排他
+    forbidden:
+      - 选项文本放入程序标签列
+
+  - id: heading-format
+    kind: positive
+    blocking: true
+    targets: [format.heading]
+    request: "设计两道题：先问用户过去 30 天是否用过手机相册的“回忆”功能，再只问用过的人对它的满意度（1–5 分）。"
+    expected:
+      - 题目标题使用“##### 题号.【标签】【显示条件】题干【题型和规则】”格式
+      - 第一题显示条件为【ALL】，第二题显示条件引用第一题的使用选项编码
+      - 评分题在标题下写明分值范围和两端锚点
+    forbidden:
+      - 第二题没有显示条件
+
+  - id: do-not-override-existing-codes
+    kind: boundary
+    blocking: true
+    targets: [adapter.data-contract]
+    fixtures: [evals/fixtures/legacy-codes.md]
+    request: "修改附件中的 Q3：增加选项“平板电脑”，其他内容不变。"
+    expected:
+      - 保留“其他”=7 和“以上都没有”=0
+      - 新选项使用不冲突的编码（例如 5）
+      - 保留开放文本关联和排他语义
+    forbidden:
+      - 将现有编码改为 98 和 99
+
+  - id: no-standalone-coding-section
+    kind: positive
+    blocking: false
+    targets: [format.no-coding-section]
+    request: >-
+      信息已经完整：评估外卖 App 新上线的“准时宝”服务（超时自动赔付），调查近 30 天下过单的成年用户是否知道、
+      是否用过、用过的人是否满意，以及没用过的原因。直接给最终问卷。
+    expected:
+      - 编码通过选项表和程序标签表达
+      - 没有单独的“基础编码说明”章节
+    forbidden:
+      - 未经要求附加完整 Codebook 或 SPSS 配置
+
+  - id: final-deliverable-only
+    kind: positive
+    blocking: true
+    targets: [adapter.no-placeholder]
+    request: >-
+      信息已经完整：评估外卖 App 新上线的“准时宝”服务（超时自动赔付），调查近 30 天下过单的成年用户是否知道、
+      是否用过、用过的人是否满意，以及没用过的原因。直接给最终问卷，不要解释过程。
+    expected:
+      - 只交付最终成文稿和必要限制
+      - 正文没有待定、待确认或未解释占位符
+      - 满意度题只向用过准时宝的人显示
+    forbidden:
+      - 输出思考过程、工作日志或长篇方法教学
+
+  - id: first-round-question-limit
+    kind: boundary
+    blocking: true
+    targets: [routing.clarify]
+    request: "帮我做个问卷，了解一下用户。"
+    expected:
+      - 首轮最多提出 6 个编号问题（一个编号问题可以包含紧密相关的子问，例如“评价什么对象？受访者用过吗？”）
+      - 不预先读完写作、格式、题库和来源等文件；只读与当前这一步有关的内容
+      - 问题优先覆盖业务决策、评价对象、研究问题类型和目标人群
+    forbidden:
+      - 在关键信息缺失时直接生成完整问卷
+      - 首轮提出超过 6 个编号问题，或用超过 6 个独立段落分别提问
+
+  - id: audit-chinese-severity
+    kind: positive
+    blocking: false
+    targets: [format.audit-table]
+    fixtures: [evals/fixtures/audit-sample.md]
+    request: "审核附件问卷，用表格列出问题。"
+    expected:
+      - 使用“严重 / 重要 / 建议”三级标签
+      - 表格包含级别、题号、问题、影响和建议
+    forbidden:
+      - 使用与验证合同无法对应的其他级别体系

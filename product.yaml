@@ -1,0 +1,93 @@
+schema_version: 2
+id: survey-zh-default
+version: 0.4.0
+framework_contract: m-survey-contract-v1
+
+contracts:
+  artifacts: references/contracts/artifacts.md
+  module: references/contracts/module-contract.md
+  validation: references/contracts/validation-contract.md
+  overlay: references/contracts/overlay-contract.md
+
+schemas:
+  questionnaire_spec: schemas/questionnaire-spec.schema.json
+
+services:
+  routing: references/services/task-routing.md
+  method_selection: references/services/method-selection.md
+  sample_planning: references/services/sample-planning.md
+
+# 验证服务。always 每次交付前执行；when 只在触发条件成立时读取并执行。
+validation:
+  always:
+    - references/services/validation/evidence-integrity.md
+    - references/services/validation/measurement-integrity.md
+  when:
+    - file: references/services/validation/spec-integrity.md
+      trigger: 交付完整问卷、修订问卷、Codebook 或 SPSS 配置
+    - file: references/services/validation/sampling-integrity.md
+      trigger: 交付物包含样本量、配额、邀约量、样本框架或样本代表性说明
+    - file: references/services/validation/privacy-baseline.md
+      trigger: 涉及未成年人、个人信息、敏感信息、联系方式、数据关联、多市场、第三方处理或跨境
+
+modules:
+  method_index: references/modules/methods/index.md
+  method_catalog: references/modules/methods/catalog.md
+  standard_items: references/modules/methods/standard-items.md
+  sources: references/modules/methods/sources.md
+  methods:
+    kano: references/modules/methods/kano.md
+    maxdiff: references/modules/methods/maxdiff.md
+    conjoint: references/modules/methods/conjoint.md
+  knowledge:
+    clarification: references/modules/knowledge/clarification-questions.md
+    clarification_probes: references/modules/knowledge/clarification-probes.md
+    question_bank: references/modules/knowledge/question-bank.csv
+
+# 产品层。每个产品一个目录，profile.yaml 定义面向受访者的文字、表头和默认编码。
+# 换产品或改产品不需要改本文件：local.yaml 的 product 优先（见 .gitignore 与 local.example.yaml）。
+default_product: survey-zh-default
+
+products:
+  survey-zh-default:
+    profile: references/products/survey-zh-default/profile.yaml
+    workflow: references/products/survey-zh-default/workflow.md
+    writing: references/products/survey-zh-default/writing.md
+    questionnaire_format: references/products/survey-zh-default/questionnaire-format.md
+    coding: references/products/survey-zh-default/coding.md
+    templates: references/products/survey-zh-default/templates.md
+    case_index: references/products/survey-zh-default/cases/index.md
+
+  # 最小英文产品，用来验证产品层可以替换。缺少的文件回退到 default_product。
+  survey-en-minimal:
+    profile: references/products/survey-en-minimal/profile.yaml
+    writing: references/products/survey-en-minimal/writing.md
+    questionnaire_format: references/products/survey-en-minimal/questionnaire-format.md
+    readme: references/products/survey-en-minimal/README.md
+
+product: survey-zh-default
+local_override: local.yaml
+
+adapters:
+  default: markdown
+  available:
+    markdown: references/adapters/markdown.md
+    codebook: references/adapters/codebook.md
+    spss: references/adapters/spss.md
+
+# 可选工具。只在有代码执行环境时使用；没有时由模型按对应规则检查。
+tools:
+  validate_spec: scripts/validate_spec.py
+  render_markdown: scripts/render_markdown.py
+  check_render: scripts/check_render.py
+
+# 按顺序应用的 overlay。格式和合并规则见 references/contracts/overlay-contract.md。
+# 示例：
+# overlays:
+#   - references/overlays/example-custom/overlay.yaml
+overlays: []
+
+evals:
+  conformance: evals/conformance/cases.yaml
+  modules: evals/modules/cases.yaml
+  product: evals/products/survey-zh-default.yaml

@@ -1,0 +1,25 @@
+schema_version: 2
+id: example-custom
+description: 示例团队对官方产品的本地覆盖：扩展撰写规范、替换编码配置、新增一个价格方法模块。
+targets: survey-zh-default
+
+overrides:
+  writing:
+    mode: extend        # 保留官方撰写规范，只追加或覆盖冲突的条目
+    file: writing.md
+  coding:
+    mode: replace       # 完整替换官方默认编码
+    file: coding.md
+
+modules:
+  methods:
+    add:
+      - id: van-westendorp
+        capability: 探索可接受价格区间
+        file: methods/van-westendorp.md
+
+evals:
+  - evals/cases.yaml
+
+# overlay 不能替换合同和官方验证服务。完整规则见
+# references/contracts/overlay-contract.md

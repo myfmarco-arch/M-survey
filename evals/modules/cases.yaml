@@ -1,0 +1,160 @@
+version: 2
+suite: modules
+contract: m-survey-contract-v1
+# 方法、服务和适配器模块的行为评测。每个方法模块至少有一个 positive 和一个 boundary 或 negative 用例。
+cases:
+  # ---------- KANO ----------
+  - id: kano-positive-classification
+    module: kano
+    kind: positive
+    blocking: true
+    targets: [method.kano.paired, method.kano.answer-set]
+    request: >-
+      我们的记账 App 有 5 个具体功能：自动识别账单、月度预算提醒、多人共享账本、发票拍照归档、深色模式。
+      想知道哪些是用户认为理所当然的基本需求，哪些是有了会惊喜的魅力需求。目标用户是近 30 天活跃的成年用户。
+    expected:
+      - 选择 KANO，并说明它回答需求类型问题
+      - 每个功能设计成对的功能题和反功能题，两题使用同一组五级回答
+      - 说明类型计算方法（例如 KANO 评价表）和可疑回答处理
+    forbidden:
+      - 把 KANO 分类结果直接表述为开发优先级排序
+
+  - id: kano-vs-maxdiff
+    module: kano
+    kind: boundary
+    blocking: true
+    targets: [method.kano.not-priority]
+    request: "我们有 12 个候选功能，想知道开发优先级。"
+    expected:
+      - 询问或判断需要需求类型还是相对排序
+      - 相对优先级优先考虑 MaxDiff
+      - 说明 KANO 只用于需求类型和满意反应非对称性
+    forbidden:
+      - 直接用 KANO 给出 12 个功能的开发排名
+
+  - id: kano-abstract-attribute
+    module: kano
+    kind: boundary
+    blocking: false
+    targets: [method.kano.concrete-attribute]
+    request: "用 KANO 测一下用户想不想要 App“更智能”“更有温度”。"
+    expected:
+      - 指出属性过于抽象，受访者无法理解“有”和“没有”的差异
+      - 要求或示范把抽象属性拆成具体功能
+    forbidden:
+      - 直接用“更智能”“更有温度”设计 KANO 成对题
+
+  # ---------- MaxDiff ----------
+  - id: maxdiff-positive-design
+    module: maxdiff
+    kind: positive
+    blocking: true
+    targets: [method.maxdiff.design-defined, method.maxdiff.same-level]
+    request: >-
+      新版耳机有 15 个同层级的卖点描述，需要知道用户相对更看重哪些，用于决定发布会的主推顺序。
+      问卷总时长不超过 12 分钟，受访者是近一年购买过无线耳机的成年人。
+    expected:
+      - 选择 MaxDiff，并写明“最看重 / 最不看重”的唯一选择标准
+      - 给出或列出每组项目数、每人任务数、每个项目曝光次数和版本数
+      - 说明输出是相对效用和排序
+    forbidden:
+      - 用 15 道独立的重要性量表题代替 MaxDiff
+      - 把相对效用解释为绝对购买概率
+
+  - id: maxdiff-needs-design
+    module: maxdiff
+    kind: boundary
+    blocking: true
+    targets: [method.maxdiff.sample-linked, sampling.complex-method-params]
+    request: "用 MaxDiff 给 30 个需求排序，直接给我样本量和问卷。"
+    expected:
+      - 要求用户提供，或显式列为假设：每组项目数、每人任务数、曝光次数和分析目标
+      - 样本建议与任务设计和分组比较连接；基于假设参数时给出情景或范围，并标明是假设
+    forbidden:
+      - 在用户未提供、也未显式列为假设的设计参数下，给出单一精确样本量
+
+  - id: maxdiff-mixed-levels
+    module: maxdiff
+    kind: boundary
+    blocking: false
+    targets: [method.maxdiff.same-level]
+    request: "MaxDiff 候选项是：价格便宜、续航 5000mAh、品牌形象好、拍照好、售后服务、外观好看、充电 30 分钟充满。直接出题。"
+    expected:
+      - 指出候选项层级或具体程度不一致（例如具体参数与抽象评价混用）
+      - 建议统一层级后再设计任务
+    forbidden:
+      - 不加说明直接使用层级混杂的候选集
+
+  # ---------- 联合分析 ----------
+  - id: conjoint-positive-design
+    module: conjoint
+    kind: positive
+    blocking: true
+    targets: [method.conjoint.levels-defined, method.conjoint.design-matches]
+    request: >-
+      笔记本电脑新品要在价格（5999/6999/7999 元）、续航（10/14/18 小时）和重量（1.2/1.5/1.8 kg）之间取舍，
+      需要模拟不同配置的选择份额。受访者是计划一年内购买轻薄本的成年人。
+    expected:
+      - 选择选择型联合分析，列出属性和水平
+      - 说明每个任务方案数、每人任务数、是否包含“都不选”和禁止组合
+      - 说明份额模拟的假设和范围
+    forbidden:
+      - 将模拟份额表述为市场销量预测
+      - 在用户未提供、也未显式列为假设的设计参数下，给出单一精确样本量
+
+  - id: conjoint-not-simple-rating
+    module: conjoint
+    kind: boundary
+    blocking: true
+    targets: [method.conjoint.not-rating]
+    request: "我们想研究价格、续航和重量的组合权衡，让用户分别打重要性分就行。"
+    expected:
+      - 区分单属性重要性评分与组合权衡
+      - 说明联合分析需要属性水平、选择任务和实验设计
+    forbidden:
+      - 将独立重要性打分称为联合分析
+
+  # ---------- 样本规划 ----------
+  - id: sample-proportion-calculation
+    module: sample-planning
+    kind: positive
+    blocking: true
+    targets: [sampling.parameters-documented]
+    request: >-
+      我们从 200 万注册用户名单中简单随机抽样，估计“使用过某功能”的比例。
+      置信水平 95%，允许误差 ±3 个百分点，预期比例未知，不需要分子群报告。最少需要多少有效样本？
+    expected:
+      - 写出 n0 = z² × p × (1-p) ÷ e² 及参数 z=1.96、p=0.5、e=0.03
+      - 得出约 1,068 份有效样本（有限总体修正后约 1,067，影响可忽略）
+      - 说明这是有效样本数，邀约量还需考虑应答率和完访率
+    forbidden:
+      - 给出与计算不一致的数字，或不写参数直接给数字
+
+  - id: sample-invitation-scenarios
+    module: sample-planning
+    kind: boundary
+    blocking: false
+    targets: [sampling.no-unfounded-number]
+    request: "目标是 800 份有效问卷，邀约量要发多少？我们没有历史应答率数据。"
+    expected:
+      - 写出邀约量 = 有效样本 ÷ 发生率 ÷ 筛选通过率 ÷ 完访率 的关系
+      - 在缺少比例依据时给出带明确假设的情景范围，而不是单一精确值
+    forbidden:
+      - 无依据给出单一精确邀约量
+
+  # ---------- SPSS 适配器 ----------
+  - id: spss-other-not-missing
+    module: spss
+    kind: positive
+    blocking: true
+    targets: [adapter.spss.missing-semantics]
+    request: >-
+      给两道题生成 SPSS 变量和值标签配置。Q1 多选：过去 30 天用过哪些支付方式？1 微信支付、2 支付宝、3 银行卡、
+      98 其他（请注明）、99 以上都没有。Q2 单选（只向 Q1 选了 1–3 的人显示）：最常用的是哪一种？1 微信支付、2 支付宝、
+      3 银行卡、97 不记得。
+    expected:
+      - Q1 每个选项一个 0/1 变量，“其他”另有文本变量
+      - Q1 的“其他”和“以上都没有”作为有效回答，不设为缺失值
+      - Q2 的 97 不记得设为用户缺失，与未展示 Q2 产生的系统缺失区分
+    forbidden:
+      - 将 98 或 99 设为 SPSS 缺失值

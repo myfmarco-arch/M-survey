@@ -1,0 +1,87 @@
+# 产品配置：survey-zh-default
+# 面向受访者的文字、表格表头和默认编码从这里读取。合同和脚本不写死这些内容，
+# 换语言或换排版只需要新增一个产品目录，不改 SKILL.md 和合同。
+schema_version: 1
+id: survey-zh-default
+language: zh-CN
+description: 中文问卷默认产品：简短直接的中文、三列选项表、默认编码 98/99。
+
+# 本产品的规范文件。缺失时回退到 default_product。
+files:
+  writing: writing.md
+  questionnaire_format: questionnaire-format.md
+  workflow: workflow.md
+  coding: coding.md
+  templates: templates.md
+  case_index: cases/index.md
+
+codes:
+  other: 98
+  none: 99
+
+tables:
+  options: [编码, 选项细节, 程序标签]
+  matrix: [子题, 行内容, 程序标签]
+
+type_labels:
+  single: 单选
+  multi: 多选
+  scale: 评分
+  matrix_scale: 矩阵评分
+  matrix_choice: 矩阵单选
+  open_text: 开放题
+  numeric: 数值填空
+  ranking: 排序
+  info: 说明
+
+tokens:
+  all: ALL
+  required: 必答
+  optional: 选答
+  randomize_options: 选项随机
+  randomize_rows: 行随机
+  single_page: 单独一页
+  hidden: 隐藏
+  select_exactly: 限选{n}项
+  select_min: 至少选{n}项
+  select_max: 最多选{n}项
+  rank_top: 排出前{n}项
+  reference_options: 引用{q}{filter}选项
+  loop_items: 循环出示{q}{filter}项
+  filter_selected: 已选
+  filter_not_selected: 未选
+  filter_all: 全部
+  option_note_suffix: ，请注明____
+  top: 置顶
+  bottom: 置底
+  fixed: 不随机
+  exclusive: 排他
+  open_fill: 开放填空
+  terminate: 终止访问
+  quota: 配额：{value}
+  conjunction_all: 且
+  conjunction_any: 或
+  answered: 已作答
+  unanswered: 未作答
+  scale_line: 评分：{min}–{max} 分；{min} = {low}，{max} = {high}
+  scale_mid: ；中点 = {mid}
+  numeric_line: 填写范围：{range}{unit}
+  integer: ；整数
+  reference_line: 选项：引用 {q} 的{filter}选项，编码沿用 {q}。
+  program_note: 程序说明：{text}
+  loop_item_placeholder: 「当前循环项」
+  pipe_placeholder: 「{q} 的回答」
+
+headings:
+  intro: 卷首语
+  part: Part {n}. {title}
+  question: "##### {id}.【{label}】【{condition}】{prompt}【{rules}】"
+
+separators:
+  rule: "，"
+  label: "；"
+
+# 正文之外的阻断区；这两个标题下不检查占位符，也不作为题目解析。
+appendices: [需确认项, 结果解释限制]
+
+# 标题模板里不要使用方括号：方括号在合同里表示“待替换占位符”，会触发 spec.no-placeholder。

@@ -1,0 +1,227 @@
+{
+  "created": "2026-11-11T20:14:31",
+  "skill_version": "0.4.0",
+  "model": "Opus 5.5 class (via subagents)",
+  "judge": "same-model self-review, N=1",
+  "suites": {
+    "conformance": {
+      "passed": true,
+      "incomplete_cases": 0,
+      "non_blocking_pass_rate": 1.0,
+      "cases": [
+        {
+          "id": "preserve-existing-data-contract",
+          "blocking": true,
+          "status": "pass",
+          "pass_runs": 1,
+          "runs": 1,
+          "details": [
+            {
+              "verdict": "pass",
+              "reason": ""
+            }
+          ]
+        },
+        {
+          "id": "non-user-cannot-rate-experience",
+          "blocking": true,
+          "status": "pass",
+          "pass_runs": 1,
+          "runs": 1,
+          "details": [
+            {
+              "verdict": "pass",
+              "reason": ""
+            }
+          ]
+        },
+        {
+          "id": "concept-not-experience",
+          "blocking": true,
+          "status": "pass",
+          "pass_runs": 1,
+          "runs": 1,
+          "details": [
+            {
+              "verdict": "pass",
+              "reason": ""
+            }
+          ]
+        },
+        {
+          "id": "sample-size-missing-parameters",
+          "blocking": true,
+          "status": "pass",
+          "pass_runs": 1,
+          "runs": 1,
+          "details": [
+            {
+              "verdict": "pass",
+              "reason": ""
+            }
+          ]
+        },
+        {
+          "id": "convenience-not-representative",
+          "blocking": true,
+          "status": "pass",
+          "pass_runs": 1,
+          "runs": 1,
+          "details": [
+            {
+              "verdict": "pass",
+              "reason": ""
+            }
+          ]
+        },
+        {
+          "id": "scale-authenticity",
+          "blocking": true,
+          "status": "pass",
+          "pass_runs": 1,
+          "runs": 1,
+          "details": [
+            {
+              "verdict": "pass",
+              "reason": ""
+            }
+          ]
+        },
+        {
+          "id": "coding-semantic-not-number",
+          "blocking": true,
+          "status": "pass",
+          "pass_runs": 1,
+          "runs": 1,
+          "details": [
+            {
+              "verdict": "pass",
+              "reason": ""
+            }
+          ]
+        },
+        {
+          "id": "correlation-not-causation",
+          "blocking": true,
+          "status": "pass",
+          "pass_runs": 1,
+          "runs": 1,
+          "details": [
+            {
+              "verdict": "pass",
+              "reason": ""
+            }
+          ]
+        },
+        {
+          "id": "minors-stop",
+          "blocking": true,
+          "status": "pass",
+          "pass_runs": 1,
+          "runs": 1,
+          "details": [
+            {
+              "verdict": "pass",
+              "reason": ""
+            }
+          ]
+        },
+        {
+          "id": "hidden-data-linkage",
+          "blocking": true,
+          "status": "pass",
+          "pass_runs": 1,
+          "runs": 1,
+          "details": [
+            {
+              "verdict": "pass",
+              "reason": ""
+            }
+          ]
+        },
+        {
+          "id": "no-compliance-claim",
+          "blocking": true,
+          "status": "pass",
+          "pass_runs": 1,
+          "runs": 1,
+          "details": [
+            {
+              "verdict": "pass",
+              "reason": ""
+            }
+          ]
+        },
+        {
+          "id": "out-of-scope-signup-form",
+          "blocking": true,
+          "status": "pass",
+          "pass_runs": 1,
+          "runs": 1,
+          "details": [
+            {
+              "verdict": "pass",
+              "reason": ""
+            }
+          ]
+        },
+        {
+          "id": "out-of-scope-data-analysis",
+          "blocking": true,
+          "status": "pass",
+          "pass_runs": 1,
+          "runs": 1,
+          "details": [
+            {
+              "verdict": "pass",
+              "reason": ""
+            }
+          ]
+        },
+        {
+          "id": "audit-mode-report",
+          "blocking": true,
+          "status": "pass",
+          "pass_runs": 1,
+          "runs": 1,
+          "details": [
+            {
+              "verdict": "pass",
+              "reason": ""
+            }
+          ]
+        },
+        {
+          "id": "consult-mode-no-forced-questionnaire",
+          "blocking": true,
+          "status": "pass",
+          "pass_runs": 1,
+          "runs": 1,
+          "details": [
+            {
+              "verdict": "pass",
+              "reason": ""
+            }
+          ]
+        },
+        {
+          "id": "adapter-codebook-semantics",
+          "blocking": true,
+          "status": "pass",
+          "pass_runs": 1,
+          "runs": 1,
+          "details": [
+            {
+              "verdict": "pass",
+              "reason": ""
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "note": "冒烟基线（smoke baseline），不是兼容性基线：N=1，低于 scoring.md 要求的 N≥3；评审由同一模型族自行完成，未做人工复核。用于证明评测流程可以端到端跑通，以及在当前 Skill 版本下 16 个 conformance 用例的可观察行为。",
+  "runs_per_case": 1,
+  "judge_independence": "same model family as the subject (not independent)",
+  "declares_compatibility": false
+}

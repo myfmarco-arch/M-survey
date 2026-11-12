@@ -1,0 +1,26 @@
+# 本地覆盖示例。复制为仓库根目录的 local.yaml 后修改。
+#
+# local.yaml 默认写入 .gitignore，属于你自己的文件，上游不会修改它。
+# 这样定制产品、启用 overlay、追加组织验证都不必改动 product.yaml 或 SKILL.md，
+# 合并上游更新时不会冲突。规则见 references/contracts/overlay-contract.md 第 5 节。
+schema_version: 1
+
+# 切换产品：留空或删掉本行表示使用 product.yaml 的产品。
+# product: survey-en-minimal
+
+# 登记自己的产品目录，不必改 product.yaml。
+# products:
+#   my-team-product:
+#     profile: my-team/profile.yaml
+#     writing: my-team/writing.md
+
+# 启用 overlay，按顺序应用，后者优先。
+overlays:
+  - references/overlays/example-custom/overlay.yaml
+
+# 追加组织自己的验证规则文件（只允许 add）。
+# 需要时取消注释，并把文件放到仓库内对应路径。
+# validation:
+#   add:
+#     - file: references/overlays/my-team/validation/team-checks.md
+#       trigger: 每次交付前

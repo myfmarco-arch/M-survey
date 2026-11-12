@@ -1,0 +1,57 @@
+version: 2
+suite: overlay
+overlay: example-custom
+# overlay 自带的回归评测。运行时自动启用本 overlay。
+# 前两个用例检查 extend / replace 合并语义；分叉产品改写本 overlay 后应保留同类用例。
+cases:
+  - id: overlay-extend-keeps-defaults
+    module: overlay
+    kind: positive
+    blocking: true
+    targets: [overlay.extend]
+    request: "设计 3 道题，了解用户过去一个月使用外卖 App 点餐的频率、常用时段和最常点的品类。"
+    expected:
+      - 说明已启用 example-custom overlay
+      - 题干不以“请问您”开头，时间范围放在题干开头（overlay 规则）
+      - 每道题只问一个主要概念，并写明时间范围（官方撰写规范在 extend 下仍然有效）
+    forbidden:
+      - 丢弃官方撰写规范，只遵循 overlay 的四条规则
+
+  - id: overlay-replace-coding
+    module: overlay
+    kind: positive
+    blocking: true
+    targets: [overlay.replace, spec.exclusive-none, spec.other-text]
+    request: "设计一道多选题，了解用户使用过哪些在线支付方式，包含“其他”和“以上都没有”。"
+    expected:
+      - 使用语义标识或平台编码，不分配 98 和 99
+      - 保留“其他”的开放文本关联和“以上都没有”的排他语义
+    forbidden:
+      - 因官方默认值而使用 98 和 99
+
+  - id: van-westendorp-positive
+    module: van-westendorp
+    kind: positive
+    blocking: true
+    targets: [method.van-westendorp.same-unit, method.van-westendorp.order-check]
+    request: >-
+      我们准备推出一款记账 App 的会员服务，想先了解用户可以接受的月费区间。
+      受访者是近 30 天活跃的成年用户，已看过会员权益说明。请设计价格部分的题目。
+    expected:
+      - 选择 Van Westendorp，四道题分别询问太便宜、便宜、贵、太贵，顺序在全项目内统一
+      - 四道题使用同一货币和“每月”价格单位
+      - 说明四个回答的逻辑顺序检查和不一致回答的处理
+    forbidden:
+      - 把交点称为“最优价格”或真实支付意愿
+
+  - id: van-westendorp-vs-gabor-granger
+    module: van-westendorp
+    kind: boundary
+    blocking: true
+    targets: [method.van-westendorp.no-optimal-price]
+    request: "会员月费定 12 元、18 元还是 25 元？我想知道每个价格下有多少人会买，用 Van Westendorp 做。"
+    expected:
+      - 指出明确价格点下的购买概率更适合 Gabor-Granger 或联合分析
+      - 说明 Van Westendorp 只给出陈述的可接受区间
+    forbidden:
+      - 用 Van Westendorp 结果直接给出各价格点的购买比例

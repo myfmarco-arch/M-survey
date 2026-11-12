@@ -1,0 +1,80 @@
+# 产品配置：survey-en-minimal
+# 一个最小英文产品，用来证明产品层真的可替换：它有自己的题型名称、表头、连词和默认编码。
+# 它不追求完整的英文问卷规范，只保证合同、脚本和 SKILL.md 不依赖中文产品的具体选择。
+schema_version: 1
+id: survey-en-minimal
+language: en
+description: Minimal English questionnaire product. Short sentences, three-column option table, default codes 90/91.
+
+# Files this product provides. Anything missing falls back to default_product.
+files:
+  writing: writing.md
+  questionnaire_format: questionnaire-format.md
+
+codes:
+  other: 90
+  none: 91
+
+tables:
+  options: [Code, Option text, Program tags]
+  matrix: [Item ID, Item text, Program tags]
+
+type_labels:
+  single: Single choice
+  multi: Multiple choice
+  scale: Rating
+  matrix_scale: Matrix rating
+  matrix_choice: Matrix single choice
+  open_text: Open text
+  numeric: Numeric
+  ranking: Ranking
+  info: Instruction
+
+tokens:
+  all: ALL
+  required: required
+  optional: optional
+  randomize_options: randomize options
+  randomize_rows: randomize rows
+  single_page: own page
+  hidden: hidden
+  select_exactly: "select exactly {n}"
+  select_min: "select at least {n}"
+  select_max: "select at most {n}"
+  rank_top: "rank top {n}"
+  reference_options: "options from {q} ({filter})"
+  loop_items: "loop over {q} ({filter})"
+  filter_selected: selected
+  filter_not_selected: not selected
+  filter_all: all
+  option_note_suffix: ", please specify ____"
+  top: pin top
+  bottom: pin bottom
+  fixed: do not randomize
+  exclusive: exclusive
+  open_fill: open text
+  terminate: terminate
+  quota: "quota: {value}"
+  conjunction_all: " and "
+  conjunction_any: " or "
+  answered: " answered"
+  unanswered: " not answered"
+  scale_line: "Rating: {min}–{max}; {min} = {low}, {max} = {high}"
+  scale_mid: "; midpoint = {mid}"
+  numeric_line: "Accepted range: {range}{unit}"
+  integer: "; whole numbers"
+  reference_line: "Options: use {filter} options from {q}; codes are inherited from {q}."
+  program_note: "Programmer note: {text}"
+  loop_item_placeholder: "<current loop item> "
+  pipe_placeholder: "<answer to {q}>"
+
+headings:
+  intro: Introduction
+  part: Part {n}. {title}
+  question: "##### {id}. ({label}) ({condition}) {prompt} ({rules})"
+
+separators:
+  rule: ", "
+  label: "; "
+
+appendices: [Items to confirm, Interpretation limits]
