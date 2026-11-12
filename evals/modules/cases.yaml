@@ -85,6 +85,19 @@ cases:
     forbidden:
       - 不加说明直接使用层级混杂的候选集
 
+  - id: maxdiff-role-separation
+    module: maxdiff
+    kind: boundary
+    blocking: true
+    targets: [method.maxdiff.task-analysis-linked, evidence.method-role-explicit, evidence.task-analysis-linked]
+    request: "我们平台有一种题型，可以让用户每组选择一个最重要和一个最不重要。启用这个题型就算做完 MaxDiff 了吧？"
+    expected:
+      - 区分 MaxDiff / BWS 方法、Best-Worst 受访任务、实验设计、Logit 或 HB 等分析模型，以及问卷平台工具
+      - 说明必须定义候选项、任务组合、曝光和平衡设计，并把选择数据连接到预先说明的估计方法
+    forbidden:
+      - 把平台题型等同于完整 MaxDiff 方法
+      - 只按最重要或最不重要的出现次数给出正式效用结论
+
   # ---------- 联合分析 ----------
   - id: conjoint-positive-design
     module: conjoint
@@ -113,6 +126,66 @@ cases:
       - 说明联合分析需要属性水平、选择任务和实验设计
     forbidden:
       - 将独立重要性打分称为联合分析
+
+  # ---------- 价格研究 ----------
+  - id: pricing-positive-gabor
+    module: pricing
+    kind: positive
+    blocking: true
+    targets: [method.pricing.goal-defined, method.pricing.product-defined, method.pricing.design-defined, method.pricing.analysis-linked, method.pricing.not-behavior]
+    request: >-
+      我们有一款规格固定的月度软件套餐，包含内容不随价格变化。想比较 49、59、69、79 元四个明确价格点下的购买反应。
+      目标用户是过去一年购买过同类软件的成年人。请设计价格测试，并说明可以得出什么结论。
+    expected:
+      - 选择 Gabor-Granger，并说明它回答固定产品在明确价格点下的购买意向反应
+      - 定义价格展示顺序或随机规则、起始点、停止规则和锚定控制
+      - 把价格回答连接到价格点反应和收入情景，并说明自报意向不等于真实销量
+    forbidden:
+      - 改用 PSM 的四个价格认知问题
+      - 把购买意向比例直接称为需求量、销量或收入预测
+
+  - id: pricing-goal-ambiguous
+    module: pricing
+    kind: boundary
+    blocking: true
+    targets: [method.pricing.goal-defined]
+    request: "给新产品做一个价格测试，直接出问卷。"
+    expected:
+      - 先区分价格认知区间、固定产品的价格点反应和价格与其他属性的组合权衡
+      - 分别说明 PSM、Gabor-Granger 和含价格属性的 CBC/DCE 回答什么问题
+      - 要求明确产品、购买单位、计费周期、币种和可行价格范围后再选方法
+    forbidden:
+      - 未说明定价决策就直接选择一种价格方法并生成可投放问卷
+
+  # ---------- 品牌健康度追踪 ----------
+  - id: brand-tracking-positive
+    module: brand-tracking
+    kind: positive
+    blocking: true
+    targets: [method.brand-tracking.core-stable, method.brand-tracking.sample-comparable, method.brand-tracking.modules-separated, method.brand-tracking.no-causal-claim]
+    request: >-
+      我们要做季度品牌健康追踪。核心指标包括无提示认知、提示认知、考虑、过去 3 个月使用、首选和 6 个品牌联想。
+      还想每季度轮换调查广告接触、购买障碍或新品评价。需要比较本品牌、三个竞品和各季度趋势。
+    expected:
+      - 把 BHT 定义为追踪项目设计，并分开固定核心模块和轮换诊断模块
+      - 固定或记录目标总体、样本来源、筛选、配额、权重、题目、量尺、品牌展示和时间窗口
+      - 说明趋势变化可以描述，但非实验追踪不能证明广告或产品动作造成变化
+    forbidden:
+      - 把每季度轮换题静默加入长期核心 KPI 趋势
+      - 把同期品牌指标变化直接解释为广告活动的因果效果
+
+  - id: brand-tracking-not-standard-scale
+    module: brand-tracking
+    kind: boundary
+    blocking: true
+    targets: [method.brand-tracking.not-scale]
+    request: "给我一套所有行业都能直接使用的标准 BHT 量表。不要再问业务背景。"
+    expected:
+      - 说明 BHT 没有跨行业统一验证量表，它是按决策、品类和市场定义的追踪项目设计
+      - 要求定义目标总体、竞争品牌、核心 KPI、测量来源、波次和趋势口径
+      - 区分品牌认知题、品牌资产量表、项目 KPI 和统计模型
+    forbidden:
+      - 自行补写一套题组并声称是正式或统一的 BHT 标准量表
 
   # ---------- 样本规划 ----------
   - id: sample-proportion-calculation

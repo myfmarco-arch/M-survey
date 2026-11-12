@@ -5,6 +5,8 @@
 
 MaxDiff 用于测量多个候选项之间的相对取舍。受访者在每个任务集中选择最符合和最不符合指定标准的项目。
 
+在方法架构中，MaxDiff / Best-Worst Scaling 是方法；“每组选择一个 Best 和一个 Worst”是受访任务；条件 Logit、Hierarchical Bayes 或其他预先说明的估计方式是分析模型。单独出现 Best-Worst 题型，不等于已经完成 MaxDiff 设计。
+
 ## 适用条件
 
 - 业务需要多个项目之间的相对优先级或效用。
@@ -35,6 +37,8 @@ MaxDiff 用于测量多个候选项之间的相对取舍。受访者在每个任
 - 版本或区组数。
 - 个体级或总体级估计方法。
 
+任务设计必须与估计方法连接。只按 Best 出现次数排名时，要明确这是简化计数，不声称得到模型估计的个体效用。
+
 样本量取决于候选项数、任务设计、每人任务数、分组比较和估计模型。不使用统一总样本阈值。
 
 ## 产生的输出
@@ -62,6 +66,7 @@ MaxDiff 用于测量多个候选项之间的相对取舍。受访者在每个任
 | `method.maxdiff.same-level` | 候选项层级一致，且选择标准唯一 | `error` |
 | `method.maxdiff.design-defined` | 每组项目数、每人任务数、曝光、配对和位置平衡已定义，或标记为待生成的设计产物 | `error` |
 | `method.maxdiff.sample-linked` | 样本建议明确连接任务设计和估计目标 | `error` |
+| `method.maxdiff.task-analysis-linked` | Best-Worst 任务、实验设计和估计方式相互匹配；简化计数与模型估计明确区分 | `error` |
 | `method.maxdiff.not-absolute` | 输出没有将相对效用表述为绝对满意度、需求类型或真实选择概率 | `error` |
 
 ## 来源与许可

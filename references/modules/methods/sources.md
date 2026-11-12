@@ -36,15 +36,18 @@
 | E24 | Gabor & Granger. “Price as an Indicator of Quality: Report on an Enquiry.” *Economica*, 1966. [DOI](https://doi.org/10.2307/2552272); Wedel & Leeflang, 1998. [DOI](https://doi.org/10.1016/S0167-4870(98)00006-3) | Gabor-Granger 及价格研究 | 元数据核验；全文未获取 |
 | E25 | Bain & Company. [Measuring Your Net Promoter Score](https://www.netpromotersystem.com/about/measuring-your-net-promoter-score/) | NPS 官方题目、分组和商标说明 | 原始网页已读取 |
 | E26 | Vohra. [How Superhuman Built an Engine to Find Product Market Fit](https://review.firstround.com/how-superhuman-built-an-engine-to-find-product-market-fit/), 2018. | PMF 问法和 40% 行业阈值 | 原始网页已读取；非同行评审 |
+| E27 | Keller. “Conceptualizing, Measuring, and Managing Customer-Based Brand Equity.” *Journal of Marketing*, 1993. [DOI](https://doi.org/10.1177/002224299305700101) | 品牌认知、品牌联想和顾客基础品牌资产的理论边界 | Crossref 摘要已读取；全文未获取 |
 
 ## 2. 检索范围和限制
 
 检索日期：2026-11-06。
 
-检索来源：OpenAlex、Crossref、原始方法页面和机构网页。检索覆盖问卷设计、NPS、满意度、服务质量、KANO、SUS、UMUX-LITE、SEQ、UEQ、Best-Worst Scaling、联合分析、价格研究、TAM、UTAUT、品牌资产、购买意向、相对权重、调查实验和潜类别分析。
+检索来源：OpenAlex、Crossref、原始方法页面和机构网页。检索覆盖问卷设计、NPS、满意度、服务质量、KANO、SUS、UMUX-LITE、SEQ、UEQ、Best-Worst Scaling、联合分析、价格研究、TAM、UTAUT、品牌资产、品牌追踪、购买意向、相对权重、调查实验和潜类别分析。
 
 纳入原则：优先纳入原始方法、验证研究、方法批评和官方口径。排除仅仅使用某种方法、但不提供方法证据的普通应用论文。
 
 这不是系统综述。多数付费论文只核验了 Crossref 元数据或摘要。本文没有把未读取的论文写成全文结论。后续建立标准题库时，还需要逐一核查正式题项、翻译版本、计分方式、版权和修改许可。
 
 2026-11-11 补充核对：NPS、SEQ 和 UMUX-LITE 的英文措辞、锚点方向和计分方式通过检索结果摘要与二手资料交叉核对，未重新获取论文全文。上述三项的获取状态不因本次核对而升级。
+
+2026-11-12 补充核对：Keller 1993 的 Crossref 摘要用于核对品牌认知和品牌联想的理论边界。它不提供统一 BHT 问卷；BHT 仍按研究项目设计管理。

@@ -27,6 +27,9 @@ M-survey 的 MIT License 只能授权项目维护者有权授权的原创内容�
 - Unified Theory of Acceptance and Use of Technology（UTAUT）。
 - KANO、Best-Worst Scaling / MaxDiff 和联合分析。
 - Van Westendorp Price Sensitivity Meter 和 Gabor-Granger。
+- U&A（Usage & Attitude）研究和品牌健康度追踪（BHT）。
+
+U&A 和 BHT 在本项目中是研究项目设计，不是统一验证量表。品牌健康度追踪的理论边界参考 Keller（1993）等来源；引用理论来源不等于获得任何商业追踪题库或行业规范的再分发权。
 
 方法名称和学术说明的引用不等于获得完整题组、商标或官方语言版本的再分发权。
 

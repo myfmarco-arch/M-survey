@@ -1,9 +1,9 @@
 ---
 name: m-survey
-description: 设计、修改和审核中文定量用户研究问卷，并提供定量方法咨询。提供可直接使用的默认产品，也支持研究者通过 overlay 替换写作、格式、编码和方法。适用于满意度与体验诊断、购买决策、需求优先级（KANO、MaxDiff、联合分析）、概念测试、命名研究和用户招募甄别；不用于普通报名表、纯定性访谈大纲、已回收数据的清洗与统计分析或问卷平台编程。
+description: 设计、修改和审核中文定量用户研究问卷，并提供定量方法咨询。提供可直接使用的默认产品，也支持研究者通过 overlay 替换写作、格式、编码和方法。适用于满意度与体验诊断、购买与价格研究、需求优先级（KANO、MaxDiff、联合分析）、品牌健康追踪、概念测试、命名研究和用户招募甄别；不用于普通报名表、纯定性访谈大纲、已回收数据的清洗与统计分析或问卷平台编程。
 license: MIT
 metadata:
-  version: 0.4.0
+  version: 0.5.0
   contract: m-survey-contract-v1
 ---
 
@@ -50,7 +50,7 @@ metadata:
 | 选择方法 | [方法选择服务](references/services/method-selection.md)、[方法目录](references/modules/methods/catalog.md) | 7 千字 |
 | 写具体题目、用标准量表 | [标准问法](references/modules/methods/standard-items.md)、[题库](references/modules/knowledge/question-bank.csv) | 需要时 |
 | 核对来源、证据等级或许可 | [来源与检索范围](references/modules/methods/sources.md) | 需要时 |
-| 特殊方法设计（KANO、MaxDiff、联合分析） | [方法索引](references/modules/methods/index.md) 指向对应的单个方法文件 | 每个约 1.3 千字 |
+| 特殊方法设计（KANO、MaxDiff、联合分析、价格研究、品牌追踪） | [方法索引](references/modules/methods/index.md) 指向对应的单个方法文件 | 按需读取一个 |
 | 样本量或配额 | [样本规划](references/services/sample-planning.md)、[样本完整性](references/services/validation/sampling-integrity.md) | 4 千字 |
 | 隐私、敏感信息、未成年人或跨境 | [隐私基线](references/services/validation/privacy-baseline.md) | 2.3 千字 |
 | 写完整问卷 | [撰写规范](references/products/survey-zh-default/writing.md)、[问卷格式](references/products/survey-zh-default/questionnaire-format.md)、[默认编码](references/products/survey-zh-default/coding.md)、[模板](references/products/survey-zh-default/templates.md)、[规格结构完整性](references/services/validation/spec-integrity.md) | 6 千字 |

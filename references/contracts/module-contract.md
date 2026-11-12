@@ -9,7 +9,7 @@
 | 类型 | 责任 | 例子 |
 |---|---|---|
 | `service` | 处理多种任务共用的能力 | 任务路由、方法选择、样本规划、质量验证 |
-| `method` | 实现一种具体研究方法 | KANO、MaxDiff、联合分析 |
+| `method` | 实现一种具体研究方法或研究项目设计；模块正文必须标明概念层级 | KANO、MaxDiff、联合分析、品牌健康度追踪 |
 | `knowledge` | 提供题库、澄清问题、领域概念或方法来源 | 澄清问题、行业术语表 |
 | `adapter` | 将研究产物转换为交付格式 | Markdown、Codebook、SPSS |
 | `profile` | 定义工作流、写作、格式和编码默认值 | `survey-zh-default` |

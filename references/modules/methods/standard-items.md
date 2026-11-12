@@ -21,6 +21,7 @@
 | 映射 ID | 标准问法 ID | 方法 | 标准状态 |
 |---|---|---|---|
 | D01–D04 | Q-GENERIC-01–04 | 常规结构化题、召回期、原因题、痛点题 | 通用模板 |
+| D05 | Q-UA-01 | U&A 研究 | 项目模板 |
 | N01 | Q-KANO-01 | KANO | 方法指令 |
 | N02 | Q-MD-01 | MaxDiff / Best-Worst Scaling | 方法指令 |
 | N03、P03 | Q-CBC-01 | 选择型联合分析 | 方法指令 |
@@ -45,6 +46,7 @@
 | G06 | Q-JUSTER-01 | Juster 购买概率 | 标准评分 |
 | B01 | Q-AWARE-01 | 品牌认知漏斗 | 通用模板 |
 | B02 | Q-CBBE-01 | 顾客基础品牌资产 | 结构说明；正式量表未内置 |
+| B04 | Q-BHT-01 | 品牌健康度追踪（BHT） | 项目模板 |
 | S01 | Q-SEGMENT-01 | 潜类别或聚类分群 | 分析模板 |
 | I02 | Q-PREPOST-01 | 前后测或重复横截面 | 设计模板 |
 
@@ -163,8 +165,10 @@ UEQ 使用语义差异题组，覆盖吸引力、清晰度、效率、可靠性�
 | 概念测试 | How clear, relevant, and credible is this concept? / 这个概念有多清楚、相关和可信？ | 维度必须服务于具体决策，并经过预测试。 |
 | Van Westendorp | At what price would [product] seem too cheap, cheap, expensive, or too expensive? | 四个价格判断必须使用同一货币和价格单位。 |
 | 品牌认知 | What brands of [category] come to mind? / 您首先想到哪些[品类]品牌？ | 先无提示，再提示；不要把提示后的答案当无提示认知。 |
+| U&A | No fixed item set. Define usage, occasions, frequency, needs, attitudes, and barriers from the decision. | U&A 是研究项目设计。必须明确品类边界、召回期和各模块用途，不能声称存在统一验证量表。 |
+| BHT | Keep the target population, sampling, core KPIs, item wording, response anchors, brand presentation, and reference periods stable across waves. | BHT 是追踪项目设计。核心模块与轮换模块要分开；样本或测量口径变化必须记录为趋势断点。 |
 
-这些模板不能标注为“经过验证的标准量表”。它们应标注为“方法模板”，并在预测试后确定最终措辞 [E01][E02][E22][E23]。
+这些模板不能标注为“经过验证的标准量表”。它们应标注为“方法模板”或“项目模板”，并在预测试后确定最终措辞 [E01][E02][E17][E22][E23][E27]。
 
 ## 4. 量表使用规则
 

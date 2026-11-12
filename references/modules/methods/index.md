@@ -9,6 +9,8 @@
 | `kano` | 将需求分为基本、期望、魅力等类型 | KANO | [kano.md](kano.md) |
 | `maxdiff` | 测量多个项目之间的相对取舍 | MaxDiff / Best-Worst Scaling | [maxdiff.md](maxdiff.md) |
 | `conjoint` | 测量属性水平组合的权衡 | 选择型联合分析 | [conjoint.md](conjoint.md) |
+| `pricing` | 区分价格认知区间、价格点反应和价格-属性权衡 | PSM、Gabor-Granger、价格 CBC/DCE | [pricing.md](pricing.md) |
+| `brand-tracking` | 设计跨波次可比较的品牌健康追踪项目 | BHT | [brand-tracking.md](brand-tracking.md) |
 
 本表与 `product.yaml` 的 `modules.methods` 一致，由 `scripts/check_repo.py` 检查。已启用 overlay 新增或替换的方法以 overlay 声明为准。
 
